@@ -12,7 +12,7 @@ public class StepDefinitions {
     public void i_register_my_position() throws Throwable {
 
         TheApi theApi = new RestAdapter.Builder()
-                .setEndpoint("http://localhost:3000")
+                .setEndpoint("http://localhost:9292")
                 .build().create(TheApi.class);
         theApi.registerPosition(123, new Coordinate(52.633584000000000000, -1.691031999999950100));
     }

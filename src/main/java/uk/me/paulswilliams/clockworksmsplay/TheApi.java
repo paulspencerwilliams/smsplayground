@@ -1,6 +1,5 @@
 package uk.me.paulswilliams.clockworksmsplay;
 
-import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.PUT;

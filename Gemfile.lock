@@ -34,11 +34,13 @@ GEM
     minitest (5.4.2)
     multi_json (1.10.1)
     multi_xml (0.5.5)
+    pg (0.17.1)
     rack (1.5.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
+    sequel (4.15.0)
     thread_safe (0.3.4)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -53,3 +55,5 @@ PLATFORMS
 
 DEPENDENCIES
   grape
+  pg
+  sequel

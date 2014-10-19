@@ -1,22 +1,22 @@
 package uk.me.paulswilliams.clockworksmsplay;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.hamcrest.Matcher;
 import retrofit.RestAdapter;
-import uk.me.paulswilliams.clockworksmsplay.daos.UserDao;
+import uk.me.paulswilliams.clockworksmsplay.daos.JDBCUserDao;
 
 import static org.junit.Assert.assertThat;
 import static uk.me.paulswilliams.clockworksmsplay.matchers.CoordinateMatcher.matchesCoordinate;
 
 
 public class StepDefinitions {
-
     private Coordinate coordinate;
-    private UserDao userDao;
+    private JDBCUserDao userDao;
+
+    public StepDefinitions(JDBCUserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @When("^I register my position$")
     public void i_register_my_position() throws Throwable {
@@ -32,15 +32,4 @@ public class StepDefinitions {
     public void the_system_will_record_my_position() throws Throwable {
         assertThat(userDao.getPositionForUser(123), matchesCoordinate(coordinate));
     }
-
-    @Before
-    public void instanciateDao() {
-        userDao = new UserDao();
-    }
-
-    @After
-    public void deleteAllUsers() throws Throwable {
-        userDao.deleteAllUsers();
-    }
-
 }

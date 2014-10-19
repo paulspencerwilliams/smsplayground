@@ -1,6 +1,8 @@
 package uk.me.paulswilliams.clockworksmsplay;
 
 import cucumber.api.PendingException;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.hamcrest.Matcher;
@@ -14,6 +16,7 @@ import static uk.me.paulswilliams.clockworksmsplay.matchers.CoordinateMatcher.ma
 public class StepDefinitions {
 
     private Coordinate coordinate;
+    private UserDao userDao;
 
     @When("^I register my position$")
     public void i_register_my_position() throws Throwable {
@@ -25,9 +28,19 @@ public class StepDefinitions {
         theApi.registerPosition(123, coordinate);
     }
 
-    @Then("^the system will record my position$")
+    @Then("^the system will record my position")
     public void the_system_will_record_my_position() throws Throwable {
-        UserDao userDao = new UserDao();
         assertThat(userDao.getPositionForUser(123), matchesCoordinate(coordinate));
     }
+
+    @Before
+    public void instanciateDao() {
+        userDao = new UserDao();
+    }
+
+    @After
+    public void deleteAllUsers() throws Throwable {
+        userDao.deleteAllUsers();
+    }
+
 }

@@ -7,7 +7,7 @@ import java.sql.*;
 public class UserDao {
     public Coordinate getPositionForUser(int userId) throws SQLException {
         String sql = "SELECT latitude, longitude from positions where user_id = ?";
-        try (Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smsplayground", "smsplayground", "itsasecret");
+        try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -19,6 +19,19 @@ public class UserDao {
         } catch (SQLException e) {
             throw e;
         }
+    }
 
+    public void deleteAllUsers() throws SQLException {
+        String sql = "DELETE from positions";
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/smsplayground", "smsplayground", "itsasecret");
     }
 }
